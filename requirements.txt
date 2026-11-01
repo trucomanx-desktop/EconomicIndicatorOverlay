@@ -1,0 +1,2 @@
+PyQt5
+brazilian_economic_data
