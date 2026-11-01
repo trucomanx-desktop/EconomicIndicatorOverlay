@@ -5,7 +5,7 @@ Display multiple time zones as always-on-top desktop clocks.
 ## Upload to PYPI
 
 ```bash
-pip install --upgrade pkginfo twine packaging
+pip install --upgrade pkginfo twine packaging build
 
 cd src
 python -m build

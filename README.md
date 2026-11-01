@@ -8,12 +8,21 @@ Displays selected Brazilian economic indicators on your desktop and refreshes th
 
 To install the package from [PyPI](https://pypi.org/project/economic-indicator-overlay/), follow the instructions below:
 
+### With pip
 
 ```bash
 pip install --upgrade economic-indicator-overlay
 ```
 
 Execute `which economic-indicator-overlay` to see where it was installed, probably in `/home/USERNAME/.local/bin/economic-indicator-overlay`.
+
+### With pipx (recommended for desktop applications)
+
+```bash
+pipx install economic_indicator_overlay
+```
+
+If you need to upgrade later: `pipx upgrade economic_indicator_overlay`
 
 ### Using
 
