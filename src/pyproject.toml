@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "economic_indicator_overlay"
-version = "0.1.0"
+version = "0.1.1"
 description = "Displays selected Brazilian economic indicators on your desktop and refreshes them at a configurable interval."
 readme = "README.md"
 authors = [{name = "Fernando Pujaico Rivera", email = "fernando.pujaico.rivera@gmail.com"}]

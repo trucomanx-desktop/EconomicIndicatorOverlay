@@ -1,6 +1,6 @@
 # about.py
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __package__ = "economic_indicator_overlay"
 __program_name__ = "economic-indicator-overlay"
 __author__ = "Fernando Pujaico Rivera" 

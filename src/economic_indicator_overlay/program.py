@@ -1,8 +1,8 @@
 import sys, os, json, signal
 from PyQt5.QtCore import Qt, QTimer, QPoint, QRectF
 from PyQt5.QtWidgets import (QApplication, QLabel, QWidget, QSystemTrayIcon,
-                             QMenu, QInputDialog)
-from PyQt5.QtGui import QFont, QPainterPath, QRegion, QIcon, QFontMetrics
+                             QMenu, QInputDialog, QColorDialog)
+from PyQt5.QtGui import QFont, QPainterPath, QRegion, QIcon, QFontMetrics, QColor
 
 import economic_indicator_overlay.about as about
 from economic_indicator_overlay.modules.configure import load_config, save_config
@@ -28,6 +28,7 @@ DEFAULT_CONFIG = {
     "refresh_hours": 6,
     "font_family": "DejaVu Sans Mono",
     "font_size": 14,
+    "font_color": "#FFFFFF",
     "display_template": "{indicators}",
     "error_template": "Error retrieving economic indicators:\n{error}",
     "indicators": DEFAULT_OPTIONS.copy(),
@@ -45,10 +46,12 @@ DEFAULT_CONFIG = {
         "refresh_now": "Refresh now",
         "font_size": "Set font size...",
         "font_family": "Set font family...",
+        "font_color": "Set text color...",
         "font_size_title": "Font size",
         "font_size_prompt": "Enter font size:",
         "font_family_title": "Font family",
         "font_family_prompt": "Enter font family:",
+        "font_color_title": "Text color",
         "about": "About",
         "exit": "Exit",
     },
@@ -60,7 +63,7 @@ class StickyIndicators(QWidget):
         super().__init__()
         self.config = config
         self.height = 120
-        self.color = "white"
+        self.color = config["font_color"]
         self.radius = 20
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -157,6 +160,8 @@ class EconomicIndicatorsTray(QSystemTrayIcon):
         size_action.triggered.connect(self.set_font_size)
         family_action = menu.addAction(ui["font_family"])
         family_action.triggered.connect(self.set_font_family)
+        color_action = menu.addAction(ui["font_color"])
+        color_action.triggered.connect(self.set_font_color)
         refresh_action = menu.addAction(ui["refresh_now"])
         refresh_action.triggered.connect(self.window.refresh_indicators)
         menu.addSeparator()
@@ -198,6 +203,19 @@ class EconomicIndicatorsTray(QSystemTrayIcon):
             self.config["font_family"] = family.strip()
             self.window.label.setFont(QFont(self.config["font_family"], self.config["font_size"], QFont.Bold))
             self.window.refresh_indicators()
+            self.save_config()
+
+    def set_font_color(self):
+        ui = self.config["ui_text"]
+        color = QColorDialog.getColor(
+            QColor(self.config["font_color"]),
+            None,
+            ui["font_color_title"]
+        )
+        if color.isValid():
+            self.config["font_color"] = color.name()
+            self.window.color = color.name()
+            self.window.label.setStyleSheet(f"color: {color.name()};")
             self.save_config()
 
     def save_config(self):
