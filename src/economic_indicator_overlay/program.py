@@ -141,7 +141,7 @@ class EconomicIndicatorsTray(QSystemTrayIcon):
 
         menu = QMenu(parent)
         ui = self.config["ui_text"]
-        indicators_menu = menu.addMenu(f"✅ {ui["indicators_menu"]}")
+        indicators_menu = menu.addMenu(f"✅ {ui['indicators_menu']}")
         self.indicator_actions = {}
         labels = {
             "show_cdi": ui["cdi"], "show_selic": ui["selic"], "show_ipca_12m": ui["ipca_12m"],
@@ -170,7 +170,7 @@ class EconomicIndicatorsTray(QSystemTrayIcon):
         color_action.triggered.connect(self.set_font_color)
         
         # Refresh
-        refresh_action = menu.addAction(f"🔄 {ui["refresh_now"]}")
+        refresh_action = menu.addAction(f"🔄 {ui['refresh_now']}")
         refresh_action.setIcon(QIcon(resource_path('icons', 'arrow-cw-svgrepo-com.svg')))
         refresh_action.triggered.connect(self.window.refresh_indicators)
         
