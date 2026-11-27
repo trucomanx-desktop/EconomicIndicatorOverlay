@@ -1,8 +1,8 @@
 import sys, os, json, signal
-from PyQt5.QtCore import Qt, QTimer, QPoint, QRectF
+from PyQt5.QtCore import Qt, QTimer, QPoint, QRectF, QUrl
 from PyQt5.QtWidgets import (QApplication, QLabel, QWidget, QSystemTrayIcon,
                              QMenu, QInputDialog, QColorDialog)
-from PyQt5.QtGui import QFont, QPainterPath, QRegion, QIcon, QFontMetrics, QColor
+from PyQt5.QtGui import QFont, QPainterPath, QRegion, QIcon, QFontMetrics, QColor, QDesktopServices
 
 import economic_indicator_overlay.about as about
 from economic_indicator_overlay.modules.configure import load_config, save_config
@@ -196,7 +196,6 @@ class EconomicIndicatorsTray(QSystemTrayIcon):
         self.show()
 
     def open_coffee_link(self):
-        show_notification_message("Buy me a coffee", "https://ko-fi.com/trucomanx")
         QDesktopServices.openUrl(QUrl("https://ko-fi.com/trucomanx"))
 
     def set_indicator(self, name, enabled):
