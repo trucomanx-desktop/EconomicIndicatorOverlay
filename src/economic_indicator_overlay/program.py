@@ -141,7 +141,7 @@ class EconomicIndicatorsTray(QSystemTrayIcon):
 
         menu = QMenu(parent)
         ui = self.config["ui_text"]
-        indicators_menu = menu.addMenu(ui["indicators_menu"])
+        indicators_menu = menu.addMenu(f"✅ {ui["indicators_menu"]}")
         self.indicator_actions = {}
         labels = {
             "show_cdi": ui["cdi"], "show_selic": ui["selic"], "show_ipca_12m": ui["ipca_12m"],
@@ -156,21 +156,48 @@ class EconomicIndicatorsTray(QSystemTrayIcon):
 
         interval_action = menu.addAction(ui["refresh_interval"])
         interval_action.triggered.connect(self.set_refresh_interval)
+        
+        
         size_action = menu.addAction(ui["font_size"])
         size_action.triggered.connect(self.set_font_size)
+        
+        # Family font
         family_action = menu.addAction(ui["font_family"])
         family_action.triggered.connect(self.set_font_family)
+        
+        # Font color
         color_action = menu.addAction(ui["font_color"])
         color_action.triggered.connect(self.set_font_color)
-        refresh_action = menu.addAction(ui["refresh_now"])
+        
+        # Refresh
+        refresh_action = menu.addAction(f"🔄 {ui["refresh_now"]}")
+        refresh_action.setIcon(QIcon(resource_path('icons', 'arrow-cw-svgrepo-com.svg')))
         refresh_action.triggered.connect(self.window.refresh_indicators)
+        
+        #
         menu.addSeparator()
+        
+        # Coffee
+        coffee_action = menu.addAction("☕ Buy me a coffee")
+        coffee_action.setIcon(QIcon(resource_path('icons', 'emote-love.png')))
+        coffee_action.triggered.connect(self.open_coffee_link)
+        
+        # About
         about_action = menu.addAction(f"ℹ️ {ui['about']}")
+        about_action.setIcon(QIcon(resource_path('icons', 'status_help.png')))
         about_action.triggered.connect(self.show_about)
+        
+        # Exit
         exit_action = menu.addAction(f"❌ {ui['exit']}")
+        exit_action.setIcon(QIcon(resource_path('icons', 'application-exit.png')))
         exit_action.triggered.connect(self.exit_app)
+        
         self.setContextMenu(menu)
         self.show()
+
+    def open_coffee_link(self):
+        show_notification_message("Buy me a coffee", "https://ko-fi.com/trucomanx")
+        QDesktopServices.openUrl(QUrl("https://ko-fi.com/trucomanx"))
 
     def set_indicator(self, name, enabled):
         self.config["indicators"][name] = enabled
